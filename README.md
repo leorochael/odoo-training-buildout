@@ -39,12 +39,12 @@ Download do Pycharm
 
 SETUP PROJETO
 ================================
-1 - Abra o pycharm com ctrl + F2 e efetue o checkout do repositório do buildout
-2 - Abrir o projeto
-3 - No console digitar: virutalenv .
-4 - Baixar o buildout padrão em https://github.com/odoo-brazil/odoo-brazil-buildout na wiki
-5 - Corrigir o extends c/ https://raw.githubusercontent.com/odoo-brazil/odoo-brazil-buildout/oca/default.cfg
-6 - Crie um arquivo chamado no seu home:
+ * Abra o pycharm com ctrl + F2 e efetue o checkout do repositório do buildout
+ * Abrir o projeto
+ * No console digitar: virutalenv .
+ * Baixar o buildout padrão em https://github.com/odoo-brazil/odoo-brazil-buildout na wiki
+ * Corrigir o extends c/ https://raw.githubusercontent.com/odoo-brazil/odoo-brazil-buildout/oca/default.cfg
+ * Crie um arquivo chamado no seu home:
 	nano ~/.buildout/default.cfg
 
 	Com o conteudo:
@@ -53,17 +53,17 @@ SETUP PROJETO
     eggs-directory = /home/SEUUSER/.buildout/eggs
     download-cache = /home/SEUUSER/.buildout/dlcache
 
-7 - Instale o reportlab manualmente
+ * Instale o reportlab manualmente
 
 	bin/pip install reportlab==2.7
-
-8 - Movendo o executavel python
+ * Movendo o executavel python
+ 
     mv bin/python bin/python.old
     nano bin/buildout #e altere o nome do arquivo python na primeira linha 
     
-    ( Tenho que ver o pq disso, geralmente não uso virutalenv)
+ OBS:   ( Tenho que ver o pq disso, geralmente não uso virutalenv)
 
-8 - Execute o buildout:
+ * Execute o buildout:
 	bin/buildout
-9 - Execute o odoo para testar.
+ * Execute o odoo para testar.
 
