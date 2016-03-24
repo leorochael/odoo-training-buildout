@@ -1,0 +1,13 @@
+/.*.cfg
+/bin
+/develop-eggs
+/etc
+/Scenario
+/include
+/lib
+/local
+/parts
+/specific-parts
+/src
+/upgrade.py
+/var
