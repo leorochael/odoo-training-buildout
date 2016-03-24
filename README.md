@@ -3,67 +3,65 @@ Instalação do Odoo
 
 Dependencias
 ============
-    sudo apt-get -y install mercurial git python-software-properties libxml2 libxslt1-dev python-setuptools python-dev libpq-dev libsasl2-dev libldap2-dev python-libxml2 libxmlsec1-dev python-reportlab libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev python-tk libxml2-dev screen bzr
+
+    sudo apt-get -y install mercurial git python-software-properties libxslt1-dev python-virtualenv python-dev libpq-dev libsasl2-dev libldap2-dev python-libxml2 libxmlsec1-dev python-reportlab libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev python-tk libxml2-dev screen bzr
 
 Java:
 =====
+
     sudo add-apt-repository ppa:webupd8team/java
     sudo apt-get update
     sudo apt-get install oracle-java8-installer
 
 Instalando o PostgreSQL
 ========================
-    sudo apt-get install postgresql-9.5 ou inferior
-    sudo apt-get install postgresql-contrib-9.5
 
-CRIANDO UM USUÁRIO PARA O POSTGRES:
-    sudo su -
-    su - postgres
-    createuser --createdb --username postgres --no-createrole --no-superuser --pwprompt treinamento
+    echo deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main | sudo tee /etc/apt/sources.list.d/postgresql.list
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+    sudo apt-get update
+    sudo apt-get install postgresql-9.5 postgresql-contrib-9.5
 
-Instalando o pip
-==========================================
-    cd /tmp
-    wget https://bootstrap.pypa.io/get-pip.py
-    sudo python get-pip.py
+Criando seu usuário no PostgreSQL
+---
+
+    sudo -i -u postgres createuser -U postgres --createdb --no-createrole --no-superuser $USER
 
 Download do Pycharm
 ==================================
+
+    sudo -i
     cd /tmp
     axel https://download.jetbrains.com/python/pycharm-community-5.0.4.tar.gz
-    cd /usr/lib
+    cd /opt
     sudo tar -zcvf /tmp/pycharm-community-5.0.4.tar.gz
-    cd /var/bin/
-    sudo ln -s /usr/lib/pycharm-5.0.4/bin/pycharm.sh pycharm
+    cd /usr/local/bin
+    sudo ln -s /opt/pycharm-5.0.4/bin/pycharm.sh pycharm
 
 
-SETUP PROJETO
+Setup do Projeto
 ================================
- * Abra o pycharm com ctrl + F2 e efetue o checkout do repositório do buildout
- * Abrir o projeto
- * No console digitar: virutalenv .
- * Baixar o buildout padrão em https://github.com/odoo-brazil/odoo-brazil-buildout na wiki
- * Corrigir o extends c/ https://raw.githubusercontent.com/odoo-brazil/odoo-brazil-buildout/oca/default.cfg
- * Crie um arquivo chamado no seu home:
-	nano ~/.buildout/default.cfg
 
-	Com o conteudo:
+ * Efetue o checkout deste repositório
+ * No console, estando no diretório raiz do projeto, digite:
+```
+virtualenv .
+bin/pip install --upgrade pip setuptools zc.buildout
+```
 
-    [buildout]
-    eggs-directory = /home/SEUUSER/.buildout/eggs
-    download-cache = /home/SEUUSER/.buildout/dlcache
-
- * Instale o reportlab manualmente
-
-	bin/pip install reportlab==2.7
- * Movendo o executavel python
- 
-    mv bin/python bin/python.old
-    nano bin/buildout #e altere o nome do arquivo python na primeira linha 
-    
- OBS:   ( Tenho que ver o pq disso, geralmente não uso virutalenv)
+ * Crie o seguinte diretório no seu "home" `~/.buildout/extends-cache`
+ * Crie um arquivo chamado `~/.buildout/default.cfg` com o conteudo:
+```
+[buildout]
+extengs-cache = /home/SEUUSER/.buildout/extends-cache
+eggs-directory = eggs
+download-cache = dlcache
+```
 
  * Execute o buildout:
-	bin/buildout
- * Execute o odoo para testar.
-
+```
+bin/buildout -N
+```
+ * Execute o odoo para testar:
+```
+bin/start_odoo
+```
